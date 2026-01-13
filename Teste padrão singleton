@@ -1,0 +1,50 @@
+// --- DEFINIÇÃO DA CLASSE SINGLETON ---
+class GerenciadorConfig {
+    // 1. Variável estática que guardará a instância única
+    private static instancia: GerenciadorConfig;
+    
+    // Propriedade de exemplo para testar a consistência
+    public tema: string = "claro";
+
+    // 2. Construtor privado: impede o uso do "new" fora da classe
+    private constructor() {
+        console.log("-----------------------------------------");
+        console.log("SISTEMA: Criando a instância pela primeira vez...");
+        console.log("-----------------------------------------");
+    }
+
+    // 3. Método estático para acessar a instância
+    public static obterInstancia(): GerenciadorConfig {
+        // Se a instância não existir, cria uma nova
+        if (!GerenciadorConfig.instancia) {
+            GerenciadorConfig.instancia = new GerenciadorConfig();
+        }
+        // Se já existir, retorna a que já está na memória
+        return GerenciadorConfig.instancia;
+    }
+}
+
+// --- ÁREA DE TESTES (O que será exibido no terminal) ---
+
+console.log("INICIANDO TESTE DO SINGLETON...");
+
+// Pedindo a instância pela primeira vez
+const configA = GerenciadorConfig.obterInstancia();
+
+// Pedindo a instância pela segunda vez
+const configB = GerenciadorConfig.obterInstancia();
+
+// Modificando o valor em uma variável
+console.log("Alterando tema no 'configA' para 'escuro'...");
+configA.tema = "escuro";
+
+// Verificando se a mudança refletiu na outra variável
+console.log("Tema no 'configB':", configB.tema); 
+
+// A PROVA FINAL: Comparando se os endereços de memória são iguais
+const saoIguais = (configA === configB);
+console.log("São o mesmo objeto na memória?", saoIguais);
+
+if (saoIguais) {
+    console.log("SUCESSO: O padrão Singleton funcionou corretamente!");
+}
